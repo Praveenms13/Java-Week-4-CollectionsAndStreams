@@ -1,0 +1,13 @@
+CalculatorTest.class
+BankAccountTest.class
+FileProcessorTest.class
+NumberUtilsTest.class
+StringUtilsTest.class
+ListManagerTest.class
+PasswordValidatorTest.class
+UserRegistrationTest.class
+DatabaseConnectionTest.class
+DateFormatterTest.class
+MathUtilsTest.class
+TaskUtilsTest.class
+TemperatureConverterTest.class

@@ -1,0 +1,13 @@
+DateFormatter.class
+TemperatureConverter.class
+PasswordValidator.class
+TaskUtils.class
+BankAccount.class
+Calculator.class
+DatabaseConnection.class
+ListManager.class
+NumberUtils.class
+MathUtils.class
+UserRegistration.class
+StringUtils.class
+FileProcessor.class
