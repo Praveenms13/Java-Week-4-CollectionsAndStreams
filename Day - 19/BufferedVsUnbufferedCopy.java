@@ -20,8 +20,13 @@ public class BufferedVsUnbufferedCopy {
 
     public static long copyUnbuffered(String source, String dest) {
         long startTime = System.nanoTime();
-        try (FileInputStream fis = new FileInputStream(source);
-             FileOutputStream fos = new FileOutputStream(dest)) {
+
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+
+        try {
+            fis = new FileInputStream(source);
+            fos = new FileOutputStream(dest);
 
             byte[] buffer = new byte[BUFFER_SIZE];
             int bytesRead;
@@ -32,14 +37,32 @@ public class BufferedVsUnbufferedCopy {
 
         } catch (IOException e) {
             System.out.println("Unbuffered copy error: " + e.getMessage());
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException ex) {
+                System.out.println("Error while closing streams: " + ex.getMessage());
+            }
         }
+
         return System.nanoTime() - startTime;
     }
 
+
     public static long copyBuffered(String source, String dest) {
         long startTime = System.nanoTime();
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(source));
-             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(dest))) {
+
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+
+        try {
+            bis = new BufferedInputStream(new FileInputStream(source));
+            bos = new BufferedOutputStream(new FileOutputStream(dest));
 
             byte[] buffer = new byte[BUFFER_SIZE];
             int bytesRead;
@@ -50,7 +73,20 @@ public class BufferedVsUnbufferedCopy {
 
         } catch (IOException e) {
             System.out.println("Buffered copy error: " + e.getMessage());
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException ex) {
+                System.out.println("Error while closing buffered streams: " + ex.getMessage());
+            }
         }
+
         return System.nanoTime() - startTime;
     }
+
 }
