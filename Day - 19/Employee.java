@@ -22,24 +22,47 @@ public class EmployeeSerializationDemo {
     }
 
     public static void serializeEmployees(List<Employee> employees) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+        ObjectOutputStream oos = null;
+        try {
+            FileOutputStream fos = new FileOutputStream(FILE_NAME);
+            oos = new ObjectOutputStream(fos);
             oos.writeObject(employees);
         } catch (IOException e) {
             System.out.println("Serialization error: " + e.getMessage());
+        } finally {
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing stream: " + e.getMessage());
+                }
+            }
         }
     }
 
     public static List<Employee> deserializeEmployees() {
         List<Employee> employees = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+        ObjectInputStream ois = null;
+        try {
+            FileInputStream fis = new FileInputStream(FILE_NAME);
+            ois = new ObjectInputStream(fis);
             employees = (List<Employee>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Deserialization error: " + e.getMessage());
+        } finally {
+            if (ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing stream: " + e.getMessage());
+                }
+            }
         }
         return employees;
     }
 }
-public class Employee implements Serializable {
+
+class Employee implements Serializable {
     private int id;
     private String name;
     private String department;
